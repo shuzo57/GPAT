@@ -1,0 +1,3 @@
+[submodule "MMPE"]
+	path = MMPE
+	url = git@github.com:shuzo57/MMPE.git
