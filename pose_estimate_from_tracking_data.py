@@ -10,11 +10,11 @@ import mmengine
 import numpy as np
 import pandas as pd
 import torch
-
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
 from mmpose.registry import VISUALIZERS
 from mmpose.structures import merge_data_samples
+
 from utils import get_file_name
 
 
@@ -114,10 +114,14 @@ def pose_estimate_from_tracking_data(
     print('\nDone')
 
 if __name__ == '__main__':
+    from config import get_config_value
+    model_path = get_config_value('model-setting', 'pose_model')
+    config_path = get_config_value('model-setting', 'pose_checkpoint')
+    
     pose_estimate_from_tracking_data(
         video_path = "/home/ohwada/golf/2023_11_01/user1/d1/1/cam2_1_300_600.mp4",
         tracking_data_path = "/home/ohwada/GSAT/cam2_1_300_600/tracking_data.csv",
-        model_path = "MMPE/models/rtmpose-l_8xb32-270e_coco-wholebody-384x288.py",
-        config_path = "/home/ohwada/GSAT/MMPE/models/rtmpose-l_simcc-coco-wholebody_pt-aic-coco_270e-384x288-eaeb96c8_20230125.pth",
+        model_path = model_path,
+        config_path = config_path,
         output_path = os.getcwd(),
     )
