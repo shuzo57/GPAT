@@ -3,6 +3,7 @@ import os
 import sys
 
 from GPAT.gpat.detect import detect_and_track
+from GPAT.gpat.detect_and_estimate import detect_and_estimate
 from GPAT.gpat.pose_estimate_from_tracking_data import \
     pose_estimate_from_tracking_data
 from GPAT.gpat.utils.config import read_config
@@ -19,6 +20,13 @@ def main():
     # プログラム全体の説明を設定
     description = "GPAT: Golf Player Analysis Tool"
     args_parser = argparse.ArgumentParser(description=description)
+    
+    args_parser.add_argument("-i", "--input", type=str, required=True, help="input video file path")
+    args_parser.add_argument("-o", "--output", type=str, default=os.getcwd(), help="output directory path")
+    args_parser.add_argument("-pm", "--pose-model", type=str, default=pose_model, help="pose model path")
+    args_parser.add_argument("-pc", "--pose-config", type=str, default=pose_checkpoint, help="pose config path")
+    args_parser.add_argument("-dm", "--det-model", type=str, default=det_model, help="detection model path")
+    args_parser.add_argument("-dc", "--det-config", type=str, default=det_checkpoint, help="detection config path")
 
     # サブコマンドを追加するためのパーサを作成
     subparsers = args_parser.add_subparsers(dest="command")
@@ -56,8 +64,14 @@ def main():
             output_path=args.output
         )
     else:
-        args_parser.print_help()
-        sys.exit(1)
+        detect_and_estimate(
+            video_path=args.input,
+            output_path=args.output,
+            pose_model=args.pose_model,
+            pose_checkpoint=args.pose_config,
+            det_model=args.det_model,
+            det_checkpoint=args.det_config
+        )
 
 if __name__ == "__main__":
     main()

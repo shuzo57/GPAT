@@ -124,15 +124,3 @@ def detect_and_track(
     cap.release()
     video_writer.release()
     print('\nDone')
-
-if __name__ == '__main__':
-    from GPAT.gpat.utils.config import get_config_value
-    model_path = get_config_value('model-setting', 'det_model')
-    config_path = get_config_value('model-setting', 'det_checkpoint')
-    
-    detect_and_track(
-        video_path = "/home/ohwada/golf/2023_11_01/user1/d1/1/cam2_1_300_600.mp4",
-        model_path = model_path,
-        config_path = config_path,
-        output_path = os.getcwd(),
-    )

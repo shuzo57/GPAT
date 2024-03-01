@@ -39,7 +39,7 @@ def pose_estimate_from_tracking_data(
     # Set the device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Using device: {device}')
-
+    
     # Load the model
     pose_estimator = init_pose_estimator(model_path, config_path, device=device)
     pose_estimator.cfg.visualizer.radius = radius
@@ -57,7 +57,7 @@ def pose_estimate_from_tracking_data(
     # Set the visualizer
     visualizer = VISUALIZERS.build(pose_estimator.cfg.visualizer)
     visualizer.set_dataset_meta(pose_estimator.dataset_meta, skeleton_style=skeleton_style)
-        
+    
     # Read the tracking data and video
     df = pd.read_csv(tracking_data_path)
     track_df = df[df['track_id'] == track_id].copy()
@@ -112,16 +112,3 @@ def pose_estimate_from_tracking_data(
     
     cap.release()
     print('\nDone')
-
-if __name__ == '__main__':
-    from GPAT.gpat.utils.config import get_config_value
-    model_path = get_config_value('model-setting', 'pose_model')
-    config_path = get_config_value('model-setting', 'pose_checkpoint')
-    
-    pose_estimate_from_tracking_data(
-        video_path = "/home/ohwada/golf/2023_11_01/user1/d1/1/cam2_1_300_600.mp4",
-        tracking_data_path = "/home/ohwada/GSAT/cam2_1_300_600/tracking_data.csv",
-        model_path = model_path,
-        config_path = config_path,
-        output_path = os.getcwd(),
-    )
