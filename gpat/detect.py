@@ -11,10 +11,10 @@ import numpy as np
 import torch
 from mmdet.apis import inference_detector, init_detector
 
-from files import FileName
+from GPAT.gpat.utils.files import FileName
+from GPAT.gpat.utils.utils import calculate_iou, get_file_name
 from mmpose.evaluation.functional import nms
 from mmpose.utils import adapt_mmdet_pipeline
-from utils import calculate_iou, get_file_name
 
 
 def detect_and_track(
@@ -126,7 +126,7 @@ def detect_and_track(
     print('\nDone')
 
 if __name__ == '__main__':
-    from config import get_config_value
+    from GPAT.gpat.utils.config import get_config_value
     model_path = get_config_value('model-setting', 'det_model')
     config_path = get_config_value('model-setting', 'det_checkpoint')
     

@@ -10,12 +10,12 @@ import mmengine
 import numpy as np
 import pandas as pd
 import torch
+
+from GPAT.gpat.utils.utils import get_file_name
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
 from mmpose.registry import VISUALIZERS
 from mmpose.structures import merge_data_samples
-
-from utils import get_file_name
 
 
 def pose_estimate_from_tracking_data(
@@ -114,7 +114,7 @@ def pose_estimate_from_tracking_data(
     print('\nDone')
 
 if __name__ == '__main__':
-    from config import get_config_value
+    from GPAT.gpat.utils.config import get_config_value
     model_path = get_config_value('model-setting', 'pose_model')
     config_path = get_config_value('model-setting', 'pose_checkpoint')
     
