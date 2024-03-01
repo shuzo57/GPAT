@@ -4,7 +4,8 @@ import os
 
 def read_config():
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    config.read(os.path.join(file_dir, 'config.ini'))
     return config
 
 def get_config_value(section, key):
