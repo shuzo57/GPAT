@@ -38,14 +38,6 @@ pip install -r requirements.txt
 pip install -v -e .
 ```
 
-## MMPE (mmpose estimation)
-### Installation
-```Bash
-git clone git@github.com:shuzo57/MMPE.git
-cd MMPE
-pip install -e .
-```
-
 ### Download pretrained model (example)
 ```Bash
 mim download mmpose --config rtmpose-l_8xb32-270e_coco-wholebody-384x288 --dest models
