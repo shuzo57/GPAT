@@ -65,7 +65,7 @@ def main():
             output_path=args.output
         )
     else:
-        detect_and_estimate(
+        pose_estimate_and_track(
             video_path=args.input,
             output_path=args.output,
             pose_model=args.pose_model,
