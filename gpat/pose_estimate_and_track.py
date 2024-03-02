@@ -21,7 +21,7 @@ from mmpose.structures import merge_data_samples
 from mmpose.utils import adapt_mmdet_pipeline
 
 
-def detect_and_estimate(
+def pose_estimate_and_track(
     video_path: str,
     output_path: str,
     pose_model: str,

@@ -2,8 +2,9 @@ import argparse
 import os
 import sys
 
+from gpat.pose_estimate_and_track import pose_estimate_and_track
+
 from GPAT.gpat.detect import detect_and_track
-from GPAT.gpat.detect_and_estimate import detect_and_estimate
 from GPAT.gpat.pose_estimate_from_tracking_data import \
     pose_estimate_from_tracking_data
 from GPAT.gpat.utils.config import read_config
