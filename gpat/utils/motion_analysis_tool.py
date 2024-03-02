@@ -30,6 +30,7 @@ def plot_3d_motion(
     
     df = pd.read_csv(threed_data_path)
     df.fillna(method="ffill", inplace=True)
+    df = df.loc[(df.filter(like="_x").sum(axis=1) != 0)]
     
     # Create the 3D motion plot
     x_max = df.filter(like="_x").max().max()
