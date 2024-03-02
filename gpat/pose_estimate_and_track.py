@@ -112,19 +112,20 @@ def pose_estimate_and_track(
         bboxes = bboxes[np.logical_and(pred_instance.labels == det_cat_id, pred_instance.scores > bbox_thr)]
         bboxes = bboxes[nms(bboxes, nms_thr), :]
 
-        if tracked_box is None:
-            sorted_bboxes = sorted(bboxes, key=lambda x: x[-1], reverse=True)
-            tracked_box = sorted_bboxes[conf_rank - 1][:4]
-        elif tracked_box is not None:
-            max_iou = 0
-            for bbox in bboxes:
-                box = bbox[:4]
-                iou = calculate_iou(tracked_box, box)
-                if iou > max_iou:
-                    max_iou = iou
-                    tracked_box = box
-            if max_iou < iou_thr:
-                tracked_box = None
+        if len(bboxes) != 0:
+            if tracked_box is None:
+                sorted_bboxes = sorted(bboxes, key=lambda x: x[-1], reverse=True)
+                tracked_box = sorted_bboxes[conf_rank - 1][:4]
+            elif tracked_box is not None:
+                max_iou = 0
+                for bbox in bboxes:
+                    box = bbox[:4]
+                    iou = calculate_iou(tracked_box, box)
+                    if iou > max_iou:
+                        max_iou = iou
+                        tracked_box = box
+                if max_iou < iou_thr:
+                    tracked_box = None
         
         if tracked_box is not None:
             pose_results = inference_topdown(pose_estimator, img, [tracked_box])
