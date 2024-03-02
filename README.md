@@ -54,11 +54,6 @@ det_model = ~/GSAT/models/rtmdet_m_8xb32-300e_coco.py
 det_checkpoint = ~/GSAT/models/rtmdet_m_8xb32-300e_coco_20220719_112220-229f527c.pth
 ```
 
-## Usage
-Based on the command-line interface (CLI) information you've provided for the Golf Player Analysis Tool (GPAT), I'll help you create a USAGE section for your README.md file. This section will guide users on how to use the tool effectively.
-
----
-
 ## USAGE
 The Golf Player Analysis Tool (GPAT) offers a comprehensive solution for analyzing golf players' poses from video input. It is divided into two main parts: human detection and tracking (`first`), and pose estimation from tracking data (`second`). Here's how to use each component:
 
