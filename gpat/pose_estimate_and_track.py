@@ -66,13 +66,12 @@ def pose_estimate_and_track(
     
     # Make the output directory
     video_name = get_file_name(video_path)
-    output_path = os.path.join(output_path, video_name)
-    os.makedirs(output_path, exist_ok=True)
-    
-    img_dir = os.path.join(output_path, 'img')
+    img_dir = os.path.join(output_path, 'img', video_name)
     os.makedirs(img_dir, exist_ok=True)
-    data_dir = os.path.join(output_path, 'data')
+    data_dir = os.path.join(output_path, 'data', video_name)
     os.makedirs(data_dir, exist_ok=True)
+    frame_dir = os.path.join(img_dir, 'frames')
+    os.makedirs(frame_dir, exist_ok=True)
     
     # Main Loop
     video_writer = None
@@ -98,11 +97,12 @@ def pose_estimate_and_track(
         
         if not ret:
             break
+        cv2.imwrite(os.path.join(frame_dir, f'{video_name}_{frame_idx}.jpg'), img)
         
         if video_writer is None:
             h, w, _ = img.shape
             video_writer = cv2.VideoWriter(
-                os.path.join(output_path, FileName.output_video),
+                os.path.join(data_dir, FileName.output_video),
                 cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
         
         # Detect and track

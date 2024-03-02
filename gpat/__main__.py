@@ -2,12 +2,12 @@ import argparse
 import os
 import sys
 
-from gpat.pose_estimate_and_track import pose_estimate_and_track
-
 from GPAT.gpat.detect import detect_and_track
+from GPAT.gpat.pose_estimate_and_track import pose_estimate_and_track
 from GPAT.gpat.pose_estimate_from_tracking_data import \
     pose_estimate_from_tracking_data
 from GPAT.gpat.utils.config import read_config
+from GPAT.gpat.utils.extensions import MEDIA_EXTENSIONS
 
 
 def main():
@@ -65,14 +65,29 @@ def main():
             output_path=args.output
         )
     else:
-        pose_estimate_and_track(
-            video_path=args.input,
-            output_path=args.output,
-            pose_model=args.pose_model,
-            pose_checkpoint=args.pose_config,
-            det_model=args.det_model,
-            det_checkpoint=args.det_config
-        )
+        if os.path.isfile(args.input):
+            pose_estimate_and_track(
+                video_path=args.input,
+                output_path=args.output,
+                pose_model=args.pose_model,
+                pose_checkpoint=args.pose_config,
+                det_model=args.det_model,
+                det_checkpoint=args.det_config
+            )
+        elif os.path.isdir(args.input):
+            for file_ in os.listdir(args.input):
+                ex = file_.split('.')[-1]
+                if os.path.isdir(os.path.join(args.input, file_)):
+                    continue  # ignore directory
+                if ex in MEDIA_EXTENSIONS:
+                    pose_estimate_and_track(
+                        video_path=os.path.join(args.input, file_),
+                        output_path=args.output,
+                        pose_model=args.pose_model,
+                        pose_checkpoint=args.pose_config,
+                        det_model=args.det_model,
+                        det_checkpoint=args.det_config
+                    )
 
 if __name__ == "__main__":
     main()
