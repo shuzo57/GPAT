@@ -28,7 +28,7 @@ def main():
             sys.exit(1)
     elif args.command == "viz":
         if os.path.isdir(args.input):
-            threed_data_path = os.path.join(args.input, FileName.threed_motion)
+            threed_data_path = os.path.join(args.input, FileName.threed_position)
             plot_3d_motion(threed_data_path)
         else:
             print(f"Invalid input path: {args.input}")
