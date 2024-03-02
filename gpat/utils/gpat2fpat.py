@@ -19,7 +19,7 @@ def gpat2fpat(
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap.release()
     
-    df = pd.read_csv(input_path)
+    df = pd.read_csv(data_path)
     columns = ['frame'] + [f"{kpt}_{xyz}" for kpt in keypoints_list for xyz in ['x', 'y', 'z']]
     new_df = pd.DataFrame(columns=columns)
     
@@ -34,5 +34,5 @@ def gpat2fpat(
         else:
             new_df[col] = df[col.replace('z', 'x')].copy()
     
-    os.rename(input_path, old_data_path)
-    new_df.to_csv(input_path, index=False)
+    os.rename(data_path, old_data_path)
+    new_df.to_csv(data_path, index=False)
