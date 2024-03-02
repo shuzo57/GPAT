@@ -11,6 +11,7 @@ setup(
         "scipy",
         'matplotlib',
         'japanize-matplotlib',
+        'plotly',
     ],
     license=(
         "The MIT License applies only to members of the Owada Laboratory "

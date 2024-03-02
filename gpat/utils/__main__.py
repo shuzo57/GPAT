@@ -16,7 +16,11 @@ def main():
     
     args = args_parser.parse_args()
     if args.command == "fpat":
-        gpat2fpat(input_path=args.input)
+        if os.path.isdir(args.input):
+            gpat2fpat(args.input)
+        else:
+            print(f"Invalid input path: {args.input}")
+            sys.exit(1)
     else:
         args_parser.print_help()
         sys.exit(1)
