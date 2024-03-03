@@ -37,11 +37,11 @@ def detect_and_track(
     
     # Make the output directory
     video_name = get_file_name(video_path)
-    output_path = os.path.join(output_path, video_name)
-    os.makedirs(output_path, exist_ok=True)
+    data_dir = os.path.join(output_path, 'data', video_name)
+    os.makedirs(data_dir, exist_ok=True)
     
     # Write the tracking data header
-    with open(os.path.join(output_path, FileName.tracking_data), 'w') as f:
+    with open(os.path.join(data_dir, FileName.tracking_data), 'w') as f:
         f.write('frame,track_id,x1,y1,x2,y2\n')
     
     video_writer = None
@@ -68,7 +68,7 @@ def detect_and_track(
         if video_writer is None:
             h, w, _ = img.shape
             video_writer = cv2.VideoWriter(
-                os.path.join(output_path, FileName.output_video),
+                os.path.join(data_dir, FileName.output_video),
                 cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
         
         # Perform detection
@@ -101,7 +101,7 @@ def detect_and_track(
 
         # Draw bounding boxes and IDs on the frame
         # Write the tracking data
-        with open(os.path.join(output_path, FileName.tracking_data), 'a') as f:
+        with open(os.path.join(data_dir, FileName.tracking_data), 'a') as f:
             for obj_id, obj_data in tracking_info.items():
                 box = obj_data['box']
                 x1, y1, x2, y2 = map(int, box[:4])

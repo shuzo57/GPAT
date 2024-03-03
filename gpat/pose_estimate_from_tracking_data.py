@@ -11,6 +11,8 @@ import numpy as np
 import pandas as pd
 import torch
 
+from GPAT.gpat.utils.files import FileName
+from GPAT.gpat.utils.skeleton_keypoints import keypoints_list
 from GPAT.gpat.utils.utils import get_file_name
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
@@ -48,15 +50,21 @@ def pose_estimate_from_tracking_data(
     
     # Make the output directory
     video_name = get_file_name(video_path)
-    output_path = os.path.join(output_path, video_name)
-    os.makedirs(output_path, exist_ok=True)
-    
-    img_dir = os.path.join(output_path, 'img')
+    img_dir = os.path.join(output_path, 'img', video_name)
     os.makedirs(img_dir, exist_ok=True)
+    data_dir = os.path.join(output_path, 'data', video_name)
+    os.makedirs(data_dir, exist_ok=True)
+    frame_dir = os.path.join(img_dir, 'frames')
+    os.makedirs(frame_dir, exist_ok=True)
     
     # Set the visualizer
     visualizer = VISUALIZERS.build(pose_estimator.cfg.visualizer)
     visualizer.set_dataset_meta(pose_estimator.dataset_meta, skeleton_style=skeleton_style)
+    
+    # Define the position and visibility dataframes
+    columns = ['frame'] + [f"{kpt}_{xy}" for kpt in keypoints_list for xy in ["x", "y"]]
+    position_df = pd.DataFrame(columns=columns)
+    visibility_df = pd.DataFrame(columns=['frame'] + keypoints_list)
     
     # Read the tracking data and video
     df = pd.read_csv(tracking_data_path)
@@ -78,6 +86,8 @@ def pose_estimate_from_tracking_data(
             continue
         if frame_idx > max_frame:
             break
+        
+        cv2.imwrite(os.path.join(frame_dir, f'{video_name}_{frame_idx}.jpg'), img)
         
         x1, y1, x2, y2 = track_df[track_df['frame'] == frame_idx][['x1', 'y1', 'x2', 'y2']].values[0]
         bboxes = np.array([[x1, y1, x2, y2]])
@@ -109,6 +119,12 @@ def pose_estimate_from_tracking_data(
             os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'),
             cv2.cvtColor(visualizer.get_image(), cv2.COLOR_RGB2BGR),
         )
+        position_data = [frame_idx] + pose_results[0].pred_instances.cpu().numpy().keypoints[0, :23].ravel().tolist()
+        position_df.loc[len(position_df)] = position_data
+        visibility_data = [frame_idx] + pose_results[0].pred_instances.cpu().numpy().keypoint_scores[0, :23].tolist()
+        visibility_df.loc[len(visibility_df)] = visibility_data
     
     cap.release()
+    position_df.to_csv(os.path.join(data_dir, FileName.position_data), index=False, header=True)
+    visibility_df.to_csv(os.path.join(data_dir, FileName.visiblity_data), index=False, header=True)
     print('\nDone')
