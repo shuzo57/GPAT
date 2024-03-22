@@ -2,12 +2,13 @@ import argparse
 import os
 import sys
 
-from GPAT.gpat.detect import detect_and_track
-from GPAT.gpat.pose_estimate_and_track import pose_estimate_and_track
-from GPAT.gpat.pose_estimate_from_tracking_data import \
+from gpat.detect import detect_and_track
+from gpat.pose_estimate_and_track import pose_estimate_and_track
+from gpat.pose_estimate_from_tracking_data import \
     pose_estimate_from_tracking_data
-from GPAT.gpat.utils.config import read_config
-from GPAT.gpat.utils.extensions import MEDIA_EXTENSIONS
+from gpat.utils.config import read_config
+from gpat.utils.extensions import MEDIA_EXTENSIONS
+from gpat.utils.gpat2fpat import gpat2fpat
 
 
 def main():
@@ -28,6 +29,7 @@ def main():
     args_parser.add_argument("-pc", "--pose-config", type=str, default=pose_checkpoint, help="pose config path")
     args_parser.add_argument("-dm", "--det-model", type=str, default=det_model, help="detection model path")
     args_parser.add_argument("-dc", "--det-config", type=str, default=det_checkpoint, help="detection config path")
+    args_parser.add_argument("-f", "--fpat", type=bool, default=False, help="convert GPAT data to FPAT data")
 
     # サブコマンドを追加するためのパーサを作成
     subparsers = args_parser.add_subparsers(dest="command")
@@ -74,6 +76,8 @@ def main():
                 det_model=args.det_model,
                 det_checkpoint=args.det_config
             )
+            video_name = os.path.basename(args.input).split('.')[0]
+            gpat2fpat(os.path.join(args.output, video_name, "data"))
         elif os.path.isdir(args.input):
             for file_ in os.listdir(args.input):
                 ex = file_.split('.')[-1]
@@ -88,6 +92,8 @@ def main():
                         det_model=args.det_model,
                         det_checkpoint=args.det_config
                     )
+                    video_name = os.path.basename(file_).split('.')[0]
+                    gpat2fpat(os.path.join(args.output, video_name, "data"))
 
 if __name__ == "__main__":
     main()
