@@ -73,4 +73,8 @@ keypoints_connections ={
     "RIGHT_FOOT_1": ["RIGHT_ANKLE", "RIGHT_BIG_TOE"],
     "RIGHT_FOOT_2": ["RIGHT_ANKLE", "RIGHT_LITTLE_TOE"],
     "RIGHT_FOOT_3": ["RIGHT_ANKLE", "RIGHT_HEEL"],
+    # "LINE_1": ["POINT1", "POINT2"],
+    # "LINE_2": ["POINT2", "POINT3"],
+    # "LINE_3": ["POINT3", "POINT4"],
+    # "LINE_4": ["POINT4", "POINT1"],
 }
