@@ -19,6 +19,7 @@ def main():
     
     viz_parser = subparsers.add_parser("viz", help="visualize the 3D motion data")
     viz_parser.add_argument("-i", "--input", type=str, required=True, help="input 3D motion data path")
+    viz_parser.add_argument("-p", "--point", action="store_true", help="show the points")
 
     subset_parser = subparsers.add_parser("subset", help="add subsets to the position data")
     subset_parser.add_argument("-f", "--front", type=str, required=True, help="front video directory path")
@@ -34,7 +35,7 @@ def main():
     elif args.command == "viz":
         if os.path.isdir(args.input):
             threed_data_path = os.path.join(args.input, FileName.threed_position)
-            plot_3d_motion(threed_data_path)
+            plot_3d_motion(threed_data_path, point_show=args.point)
         else:
             print(f"Invalid input path: {args.input}")
             sys.exit(1)

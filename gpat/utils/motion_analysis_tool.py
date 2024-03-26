@@ -1,4 +1,5 @@
 import os
+from itertools import combinations
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -23,14 +24,21 @@ def plot_3d_motion(
     marker_size: int = 3,
     graph_mode: str = "lines+markers",
     frame_step: int = 1,
+    point_show: bool = False,
 ) -> None:
     # Read the 3D motion data
     data_dir = os.path.dirname(threed_data_path)
     output_path = os.path.join(data_dir, FileName.threed_motion)
     
     df = pd.read_csv(threed_data_path)
-    df.fillna(method="ffill", inplace=True)
+    df.ffill(inplace=True)
     df = df.loc[(df.filter(like="_x").sum(axis=1) != 0)]
+
+    if point_show:
+        point_columns = [col.replace("_x", "") for col in df.columns if col.endswith("_x") and col.startswith("POINT")]
+        point_combinations = list(combinations(point_columns, 2))
+        for i, (start, end) in enumerate(point_combinations):
+            keypoints_connections[f"LINE{i+1}"] = [start, end]
     
     # Create the 3D motion plot
     x_max = df.filter(like="_x").max().max()
@@ -44,6 +52,7 @@ def plot_3d_motion(
     
     frames = []
     for frame in range(min_frame, max_frame + 1, frame_step):
+        print(f"\rProcessing frame: {frame}/{max_frame}", end="")
         vec_data = get_3d_motion_data(df, frame)
 
         x_vec_label = list(vec_data.keys())[0::3]
@@ -70,6 +79,7 @@ def plot_3d_motion(
             layout=go.Layout(title=f"frame:{frame}"),
         )
         frames.append(fig)
+    print()
 
     vec_data = get_3d_motion_data(df, min_frame)
     fig = go.Figure(

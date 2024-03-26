@@ -29,10 +29,10 @@ def add_subsets(front_dir, side_dir):
     side_df = pd.read_csv(os.path.join(side_dir, FileName.position_data))
 
     for i, v in enumerate(data["subsets"]):
-        front_df[f"POINT{i}_x"] = v[front_video_name][0]
-        front_df[f"POINT{i}_y"] = v[front_video_name][1]
-        side_df[f"POINT{i}_x"] = v[side_video_name][0]
-        side_df[f"POINT{i}_y"] = v[side_video_name][1]
+        front_df[f"POINT{i+1}_x"] = v[front_video_name][0]
+        front_df[f"POINT{i+1}_y"] = v[front_video_name][1]
+        side_df[f"POINT{i+1}_x"] = v[side_video_name][0]
+        side_df[f"POINT{i+1}_y"] = v[side_video_name][1]
 
     cap = cv2.VideoCapture(os.path.join(front_dir, FileName.output_video))
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
