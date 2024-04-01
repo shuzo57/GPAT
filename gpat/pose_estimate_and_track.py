@@ -175,5 +175,5 @@ def pose_estimate_and_track(
     video_writer.release()
     
     position_df.to_csv(os.path.join(data_dir, FileName.position_data), index=False, header=True)
-    visibility_df.to_csv(os.path.join(data_dir, FileName.visiblity_data), index=False, header=True)
+    visibility_df.to_csv(os.path.join(data_dir, FileName.visibility_data), index=False, header=True)
     print('\nDone')
