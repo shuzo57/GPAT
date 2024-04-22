@@ -153,6 +153,7 @@ def pose_estimate_and_track(
             
             # Save the results
             bgr_img = cv2.cvtColor(visualizer.get_image(), cv2.COLOR_RGB2BGR)
+            cv2.putText(bgr_img, f'Frame: {frame_idx}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             video_writer.write(bgr_img)
             cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), bgr_img)
             
@@ -161,6 +162,7 @@ def pose_estimate_and_track(
             visibility_data = [frame_idx] + pose_results[0].pred_instances.cpu().numpy().keypoint_scores[0, :23].tolist()
             visibility_df.loc[len(visibility_df)] = visibility_data
         else:
+            cv2.putText(img, f'Frame: {frame_idx}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             video_writer.write(img)
             cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), img)
             

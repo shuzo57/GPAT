@@ -77,7 +77,8 @@ def main():
                 det_checkpoint=args.det_config
             )
             video_name = os.path.basename(args.input).split('.')[0]
-            gpat2fpat(os.path.join(args.output, "data", video_name))
+            if args.fpat:
+                gpat2fpat(os.path.join(args.output, "data", video_name))
         elif os.path.isdir(args.input):
             for file_ in os.listdir(args.input):
                 ex = file_.split('.')[-1]
@@ -93,7 +94,8 @@ def main():
                         det_checkpoint=args.det_config
                     )
                     video_name = os.path.basename(file_).split('.')[0]
-                    gpat2fpat(os.path.join(args.output, "data", video_name))
+                    if args.fpat:
+                        gpat2fpat(os.path.join(args.output, "data", video_name))
 
 if __name__ == "__main__":
     main()
