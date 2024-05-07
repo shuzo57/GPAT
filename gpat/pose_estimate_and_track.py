@@ -12,9 +12,9 @@ import pandas as pd
 import torch
 from mmdet.apis import inference_detector, init_detector
 
-from GPAT.gpat.utils.files import FileName
-from GPAT.gpat.utils.skeleton_keypoints import keypoints_list
-from GPAT.gpat.utils.utils import calculate_iou, get_file_name
+from gpat.utils.files import FileName
+from gpat.utils.skeleton_keypoints import keypoints_list
+from gpat.utils.utils import calculate_iou, get_file_name
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
 from mmpose.evaluation.functional import nms
@@ -45,6 +45,7 @@ def pose_estimate_and_track(
     show = False,
     show_interval : int = 0,
     draw_bbox = False,
+    save_img = False
 ) -> None:
     # Set the device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -70,8 +71,9 @@ def pose_estimate_and_track(
     os.makedirs(img_dir, exist_ok=True)
     data_dir = os.path.join(output_path, 'data', video_name)
     os.makedirs(data_dir, exist_ok=True)
-    frame_dir = os.path.join(img_dir, 'frames')
-    os.makedirs(frame_dir, exist_ok=True)
+    if save_img:
+        frame_dir = os.path.join(img_dir, 'frames')
+        os.makedirs(frame_dir, exist_ok=True)
     
     # Main Loop
     video_writer = None
@@ -97,7 +99,8 @@ def pose_estimate_and_track(
         
         if not ret:
             break
-        cv2.imwrite(os.path.join(frame_dir, f'{video_name}_{frame_idx}.jpg'), img)
+        if save_img:
+            cv2.imwrite(os.path.join(frame_dir, f'{video_name}_{frame_idx}.jpg'), img)
         
         if video_writer is None:
             h, w, _ = img.shape
@@ -155,7 +158,8 @@ def pose_estimate_and_track(
             bgr_img = cv2.cvtColor(visualizer.get_image(), cv2.COLOR_RGB2BGR)
             cv2.putText(bgr_img, f'Frame: {frame_idx}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             video_writer.write(bgr_img)
-            cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), bgr_img)
+            if save_img:
+                cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), bgr_img)
             
             position_data = [frame_idx] + pose_results[0].pred_instances.cpu().numpy().keypoints[0, :23].ravel().tolist()
             position_df.loc[len(position_df)] = position_data
@@ -164,7 +168,8 @@ def pose_estimate_and_track(
         else:
             cv2.putText(img, f'Frame: {frame_idx}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             video_writer.write(img)
-            cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), img)
+            if save_img:
+                cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), img)
             
             position_data = [frame_idx] + [np.nan] * 46
             position_df.loc[len(position_df)] = position_data
