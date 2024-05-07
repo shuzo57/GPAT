@@ -30,6 +30,7 @@ def main():
     args_parser.add_argument("-dm", "--det-model", type=str, default=det_model, help="detection model path")
     args_parser.add_argument("-dc", "--det-config", type=str, default=det_checkpoint, help="detection config path")
     args_parser.add_argument("-f", "--fpat", type=bool, default=False, help="convert GPAT data to FPAT data")
+    args_parser.add_argument("-s", "--save_img", type=bool, default=False, help="save images")
 
     # サブコマンドを追加するためのパーサを作成
     subparsers = args_parser.add_subparsers(dest="command")
@@ -74,7 +75,8 @@ def main():
                 pose_model=args.pose_model,
                 pose_checkpoint=args.pose_config,
                 det_model=args.det_model,
-                det_checkpoint=args.det_config
+                det_checkpoint=args.det_config,
+                save_img=args.save_img
             )
             video_name = os.path.basename(args.input).split('.')[0]
             if args.fpat:
@@ -91,7 +93,8 @@ def main():
                         pose_model=args.pose_model,
                         pose_checkpoint=args.pose_config,
                         det_model=args.det_model,
-                        det_checkpoint=args.det_config
+                        det_checkpoint=args.det_config,
+                        save_img=args.save_img
                     )
                     video_name = os.path.basename(file_).split('.')[0]
                     if args.fpat:
