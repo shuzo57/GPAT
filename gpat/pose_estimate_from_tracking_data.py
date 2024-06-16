@@ -11,9 +11,9 @@ import numpy as np
 import pandas as pd
 import torch
 
-from GPAT.gpat.utils.files import FileName
-from GPAT.gpat.utils.skeleton_keypoints import keypoints_list
-from GPAT.gpat.utils.utils import get_file_name
+from gpat.utils.files import FileName
+from gpat.utils.skeleton_keypoints import keypoints_list
+from gpat.utils.utils import get_file_name
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
 from mmpose.registry import VISUALIZERS

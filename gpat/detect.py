@@ -11,8 +11,8 @@ import numpy as np
 import torch
 from mmdet.apis import inference_detector, init_detector
 
-from GPAT.gpat.utils.files import FileName
-from GPAT.gpat.utils.utils import calculate_iou, get_file_name
+from gpat.utils.files import FileName
+from gpat.utils.utils import calculate_iou, get_file_name
 from mmpose.evaluation.functional import nms
 from mmpose.utils import adapt_mmdet_pipeline
 

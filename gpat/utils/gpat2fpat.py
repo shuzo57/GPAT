@@ -3,8 +3,8 @@ import os
 import cv2
 import pandas as pd
 
-from GPAT.gpat.utils.files import FileName
-from GPAT.gpat.utils.skeleton_keypoints import keypoints_list
+from gpat.utils.files import FileName
+from gpat.utils.skeleton_keypoints import keypoints_list
 
 
 def gpat2fpat(
