@@ -13,7 +13,7 @@ import torch
 from mmdet.apis import inference_detector, init_detector
 
 from gpat.utils.files import FileName
-from gpat.utils.skeleton_keypoints import keypoints_list
+from gpat.utils.skeleton_keypoints import exp_keypoints_list
 from gpat.utils.utils import calculate_iou, get_file_name
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
@@ -78,9 +78,9 @@ def run(
     frame_idx = 1
     
     # Define the position and visibility dataframes
-    columns = ['frame'] + [f"{kpt}_{xy}" for kpt in keypoints_list for xy in ["x", "y"]]
+    columns = ['frame'] + [f"{kpt}_{xy}" for kpt in exp_keypoints_list for xy in ["x", "y"]]
     position_df = pd.DataFrame(columns=columns)
-    visibility_df = pd.DataFrame(columns=['frame'] + keypoints_list)
+    visibility_df = pd.DataFrame(columns=['frame'] + exp_keypoints_list)
     
     cap = cv2.VideoCapture(video_path)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))

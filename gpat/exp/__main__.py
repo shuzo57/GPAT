@@ -11,10 +11,10 @@ from gpat.utils.gpat2fpat import gpat2fpat
 def main():
     # 設定ファイルの読み込み
     config = read_config()
-    pose_model = os.path.expanduser(config["model-setting"]["pose_model"])
-    pose_checkpoint = os.path.expanduser(config["model-setting"]["pose_checkpoint"])
-    det_model = os.path.expanduser(config["model-setting"]["det_model"])
-    det_checkpoint = os.path.expanduser(config["model-setting"]["det_checkpoint"])
+    pose_model = os.path.expanduser(config["exp-setting"]["pose_model"])
+    pose_checkpoint = os.path.expanduser(config["exp-setting"]["pose_checkpoint"])
+    det_model = os.path.expanduser(config["exp-setting"]["det_model"])
+    det_checkpoint = os.path.expanduser(config["exp-setting"]["det_checkpoint"])
     
     # プログラム全体の説明を設定
     description = "GPAT: Golf Player Analysis Tool"
