@@ -50,6 +50,10 @@ def main():
             if os.path.isdir(os.path.join(args.input, file_)):
                 continue  # ignore directory
             if ex in MEDIA_EXTENSIONS:
+                base_name = os.path.basename(file_).split(".")[0]
+                if os.path.exists(os.path.join(args.output, base_name)):
+                    print(f"{base_name} already exists in {args.output}")
+                    continue
                 run(
                     video_path=os.path.join(args.input, file_),
                     output_path=args.output,
