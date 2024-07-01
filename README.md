@@ -85,7 +85,7 @@ python -m gpat [-h] -i INPUT [-o OUTPUT] [-pm POSE_MODEL] [-pc POSE_CONFIG] [-dm
 - `-dm DET_MODEL, --det-model DET_MODEL`: Detection model path (optional).
 - `-dc DET_CONFIG, --det-config DET_CONFIG`: Detection config path (optional).
 
-### 17のキーポイント
+### 17のキーポイント予測
 ```bash
 python -m gpat.exp [-h] -i INPUT [-o OUTPUT] [-pm POSE_MODEL] [-pc POSE_CONFIG] [-dm DET_MODEL] [-dc DET_CONFIG] [-f] [-s]
 ```
