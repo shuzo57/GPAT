@@ -45,7 +45,7 @@ mim download mmpose --config rtmpose-l_8xb32-270e_coco-wholebody-384x288 --dest 
 mim download mmdet --config rtmdet_m_8xb32-300e_coco --dest models
 ```
 
-#### For experiment
+#### For experiment (17のキーポイント用)
 ```Bash
 mim download mmpose --config rtmpose-l_8xb256-420e_body8-384x288 --dest models
 mim download mmdet --config rtmdet_l_8xb32-300e_coco --dest models
