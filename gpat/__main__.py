@@ -29,9 +29,9 @@ def main():
     args_parser.add_argument("-pc", "--pose-config", type=str, default=pose_checkpoint, help="pose config path")
     args_parser.add_argument("-dm", "--det-model", type=str, default=det_model, help="detection model path")
     args_parser.add_argument("-dc", "--det-config", type=str, default=det_checkpoint, help="detection config path")
-    args_parser.add_argument("-f", "--fpat", type=bool, default=False, help="convert GPAT data to FPAT data")
-    args_parser.add_argument("-s", "--save_img", type=bool, default=False, help="save images")
-
+    args_parser.add_argument("-f", "--fpat", action="store_true", default=False, help="convert GPAT data to FPAT data")
+    args_parser.add_argument("-s", "--save_img", action="store_true", default=False, help="save images")
+    
     # サブコマンドを追加するためのパーサを作成
     subparsers = args_parser.add_subparsers(dest="command")
 
