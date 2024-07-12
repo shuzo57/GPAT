@@ -169,9 +169,9 @@ def run(
             if save_img:
                 cv2.imwrite(os.path.join(img_dir, f'{video_name}_{frame_idx}.jpg'), img)
             
-            position_data = [frame_idx] + [np.nan] * 46
+            position_data = [frame_idx] + [np.nan] * 34
             position_df.loc[len(position_df)] = position_data
-            visibility_data = [frame_idx] + [np.nan] * 23
+            visibility_data = [frame_idx] + [np.nan] * 17
             visibility_df.loc[len(visibility_df)] = visibility_data
         
         frame_idx += 1
