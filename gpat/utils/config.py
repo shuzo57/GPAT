@@ -8,6 +8,10 @@ def read_config():
     config.read(os.path.join(file_dir, '..', '..', 'config.ini'))
     return config
 
+def get_config_path():
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(file_dir, '..', '..', 'config.ini')
+
 def get_config_value(section, key):
     config = read_config()
     return os.path.expanduser(config[section][key])
