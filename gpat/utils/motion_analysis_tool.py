@@ -27,7 +27,7 @@ def plot_3d_motion(
     point_show: bool = False,
 ) -> None:
     # Read the 3D motion data
-    data_dir = os.path.dirname(threed_data_path)
+    data_dir = os.path.expanduser(os.path.dirname(threed_data_path))
     output_path = os.path.join(data_dir, FileName.threed_motion)
     
     df = pd.read_csv(threed_data_path)
@@ -175,3 +175,7 @@ def plot_3d_motion(
     )
     
     fig.write_html(output_path, auto_play=False)
+
+if __name__ == "__main__":
+    threed_data_path = "~/measurement_session_20240818/data/A1_front_2484_2556/3d_position_data.csv"
+    plot_3d_motion(threed_data_path)
