@@ -177,5 +177,5 @@ def plot_3d_motion(
     fig.write_html(output_path, auto_play=False)
 
 if __name__ == "__main__":
-    threed_data_path = "~/measurement_session_20240818/data/A1_front_2484_2556/3d_position_data.csv"
+    threed_data_path = "~/ms_b_20240818/data/B_front_59856_60636/3d_position_data.csv"
     plot_3d_motion(threed_data_path)

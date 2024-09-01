@@ -80,6 +80,9 @@ def run(
     data_dir = os.path.join(output_path, 'data', video_name)
     os.makedirs(data_dir, exist_ok=True)
     
+    frame_dir = os.path.join(img_dir, 'frames')
+    os.makedirs(frame_dir, exist_ok=True)
+    
     # Main Loop
     video_writer = None
     tracked_box = None
@@ -104,6 +107,9 @@ def run(
         
         if not ret:
             break
+        
+        if save_img:
+            cv2.imwrite(os.path.join(frame_dir, f'{video_name}_{frame_idx}.jpg'), img)
         
         if video_writer is None:
             h, w, _ = img.shape
