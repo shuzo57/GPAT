@@ -10,10 +10,10 @@ import mmengine
 import numpy as np
 import pandas as pd
 import torch
-
 from gpat.utils.files import FileName
 from gpat.utils.skeleton_keypoints import keypoints_list
 from gpat.utils.utils import get_file_name
+
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
 from mmpose.registry import VISUALIZERS
@@ -126,5 +126,15 @@ def pose_estimate_from_tracking_data(
     
     cap.release()
     position_df.to_csv(os.path.join(data_dir, FileName.position_data), index=False, header=True)
-    visibility_df.to_csv(os.path.join(data_dir, FileName.visiblity_data), index=False, header=True)
+    visibility_df.to_csv(os.path.join(data_dir, FileName.visibility_data), index=False, header=True)
     print('\nDone')
+
+if __name__ == "__main__":
+    pose_estimate_from_tracking_data(
+        video_path="/home/ohwada/sasaki_20240930/video/left_34.MP4" ,
+        tracking_data_path="/home/ohwada/detect_/data/left_34/tracking_data.csv",
+        model_path="/home/ohwada/human_pose_estimation/models/rtmpose-l_8xb32-270e_coco-wholebody-384x288.py",
+        config_path="/home/ohwada/human_pose_estimation/models/rtmpose-l_simcc-coco-wholebody_pt-aic-coco_270e-384x288-eaeb96c8_20230125.pth",
+        output_path="/home/ohwada/detect_/",
+        track_id=2,
+    )
