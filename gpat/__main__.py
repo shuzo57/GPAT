@@ -2,10 +2,7 @@ import argparse
 import os
 import sys
 
-from gpat.detect import detect_and_track
 from gpat.pose_estimate_and_track import pose_estimate_and_track
-from gpat.pose_estimate_from_tracking_data import \
-    pose_estimate_from_tracking_data
 from gpat.utils.config import read_config
 from gpat.utils.extensions import MEDIA_EXTENSIONS
 from gpat.utils.gpat2fpat import gpat2fpat

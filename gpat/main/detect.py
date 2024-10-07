@@ -68,7 +68,7 @@ def detect_and_track(
         if video_writer is None:
             h, w, _ = img.shape
             video_writer = cv2.VideoWriter(
-                os.path.join(data_dir, FileName.output_video),
+                os.path.join(data_dir, FileName.output_tracking_video),
                 cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
         
         # Perform detection
