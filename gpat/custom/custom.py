@@ -11,11 +11,11 @@ import mmengine
 import numpy as np
 import pandas as pd
 import torch
+from mmdet.apis import inference_detector, init_detector
+
 from gpat.utils.files import FileName
 from gpat.utils.skeleton_keypoints import keypoints_list
 from gpat.utils.utils import calculate_iou, get_file_name
-from mmdet.apis import inference_detector, init_detector
-
 from mmpose.apis import inference_topdown
 from mmpose.apis import init_model as init_pose_estimator
 from mmpose.evaluation.functional import nms
@@ -29,7 +29,7 @@ def run(
     output_path: str,
     config_path: str,
     det_cat_id: int = 0,
-    conf_rank: int = 2,
+    conf_rank: int = 1,
     bbox_thr: float = 0.5,
     nms_thr: float = 0.3,
     iou_thr: float = 0.01,
